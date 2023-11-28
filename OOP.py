@@ -97,55 +97,51 @@
 
 # Path: main.py
 # Polymorphism
-# class User:
-#     _type = None
-#     _loggedIn = False
-#     _email = ''
+class User:
+    _type = None
+    _loggedIn = False   # private variables because they start with _
 
-#     def __init__(self, email):
-#         self._email = email
+    def sign_in(self):
+        self._loggedIn = True
+        print('Logged in')
 
-#     def sign_in(self):
-#         self._loggedIn = True
-#         print('Logged in')
-
-#     def attack(self):
-#         print('Do nothing')
+    def attack(self):
+        print('Do nothing')
 
 
-# class Wizard(User):  # Wizard class inherits from User class
-#     _name = 'Anonymous'
-#     _power = 0
+class Wizard(User):  # Wizard class inherits from User class
+    _name = 'Anonymous'
+    _power = 0
 
-#     def __init__(self, name, power, email):
-#         super().__init__(email)  # super() - calls the parent class
-#         self._name = name
-#         self._power = power
-#         User._type = 'Wizard'
-#         User.sign_in(self)
+    def __init__(self, name, power, email):
+        super().__init__(email)  # super() - calls the parent class
+        self._name = name
+        self._power = power
+        User._type = 'Wizard'
+        User.sign_in(self)
 
-#     def attack(self):
-#         User.attack(self)
-#         print(f'Attacking with power of {self._power}')
+    def attack(self):
+        User.attack(self)
+        print(f'Attacking with power of {self._power}')
 
-#     def run(self):
-#         print('Run really fast')
+    def run(self):
+        print('Run really fast')
 
 
-# class Archer(User):
-#     _name = 'Anonymous'
-#     _num_arrows = 0
+class Archer(User):
+    _name = 'Anonymous'
+    _num_arrows = 0
 
-#     def __init__(self, name, num_arrows):
-#         self._name = name
-#         self._num_arrows = num_arrows
-#         User._type = 'Archer'
+    def __init__(self, name, num_arrows):
+        self._name = name
+        self._num_arrows = num_arrows
+        User._type = 'Archer'
 
-#     def attack(self):
-#         print(f'Attacking with arrows: arrows left - {self._num_arrows}')
+    def attack(self):
+        print(f'Attacking with arrows: arrows left - {self._num_arrows}')
 
-#     def run(self):
-#         print('Run really fast')
+    def run(self):
+        print('Run really fast')
 
 
 # wizard1 = Wizard('Merlin', 50, 'wot@gmail.com')
@@ -164,29 +160,29 @@
 
 # Dunder methods
 
-class Toy:
-    def __init__(self, color, age):
-        self._color = color
-        self._age = age
-        self._my_dict = {
-            'name': 'Yoyo',
-            'has_pets': False
-        }
+# class Toy:
+#     def __init__(self, color, age):
+#         self._color = color
+#         self._age = age
+#         self._my_dict = {
+#             'name': 'Yoyo',
+#             'has_pets': False
+#         }
 
-    def __str__(self):
-        return f'{self._color}'
+#     def __str__(self):
+#         return f'{self._color}'
 
-    def __len__(self):
-        return 5
+#     def __len__(self):
+#         return 5
 
-    def __call__(self):
-        return 'yes?'
+#     def __call__(self):
+#         return 'yes?'
 
-    def __getitem__(self, i):
-        return self._my_dict[i]
+#     def __getitem__(self, i):
+#         return self._my_dict[i]
 
 
-action_figure = Toy('red', 0)
+# action_figure = Toy('red', 0)
 
 # print(action_figure.__str__())  # same as print(str(action_figure))
 # print(str(action_figure))
@@ -195,5 +191,24 @@ action_figure = Toy('red', 0)
 # print(action_figure())
 # print(action_figure.__call__())  # same as print(action_figure())
 
-print(action_figure['name'])
-print(action_figure['has_pets'])
+# print(action_figure['name'])
+# print(action_figure['has_pets'])
+
+
+# Path: main.py
+# Exercise dunder methods
+
+# create a superlist class that behaves like a list but has a dunder method len that always returns 1000
+# class SuperList(list):
+#     def __len__(self):
+#         return 1000
+
+
+# super_list1 = SuperList()
+
+# print(len(super_list1))
+# super_list1.append(5)
+# print(super_list1[0])
+# print(issubclass(SuperList, list))
+# print(issubclass(list, object))
+# print(issubclass(SuperList, object))
