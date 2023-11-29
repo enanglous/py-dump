@@ -97,51 +97,51 @@
 
 # Path: main.py
 # Polymorphism
-class User:
-    _type = None
-    _loggedIn = False   # private variables because they start with _
+# class User:
+#     _type = None
+#     _loggedIn = False   # private variables because they start with _
 
-    def sign_in(self):
-        self._loggedIn = True
-        print('Logged in')
+#     def sign_in(self):
+#         self._loggedIn = True
+#         print('Logged in')
 
-    def attack(self):
-        print('Do nothing')
-
-
-class Wizard(User):  # Wizard class inherits from User class
-    _name = 'Anonymous'
-    _power = 0
-
-    def __init__(self, name, power, email):
-        super().__init__(email)  # super() - calls the parent class
-        self._name = name
-        self._power = power
-        User._type = 'Wizard'
-        User.sign_in(self)
-
-    def attack(self):
-        User.attack(self)
-        print(f'Attacking with power of {self._power}')
-
-    def run(self):
-        print('Run really fast')
+#     def attack(self):
+#         print('Do nothing')
 
 
-class Archer(User):
-    _name = 'Anonymous'
-    _num_arrows = 0
+# class Wizard(User):  # Wizard class inherits from User class
+#     _name = 'Anonymous'
+#     _power = 0
 
-    def __init__(self, name, num_arrows):
-        self._name = name
-        self._num_arrows = num_arrows
-        User._type = 'Archer'
+#     def __init__(self, name, power, email):
+#         super().__init__(email)  # super() - calls the parent class
+#         self._name = name
+#         self._power = power
+#         User._type = 'Wizard'
+#         User.sign_in(self)
 
-    def attack(self):
-        print(f'Attacking with arrows: arrows left - {self._num_arrows}')
+#     def attack(self):
+#         User.attack(self)
+#         print(f'Attacking with power of {self._power}')
 
-    def run(self):
-        print('Run really fast')
+#     def run(self):
+#         print('Run really fast')
+
+
+# class Archer(User):
+#     _name = 'Anonymous'
+#     _num_arrows = 0
+
+#     def __init__(self, name, num_arrows):
+#         self._name = name
+#         self._num_arrows = num_arrows
+#         User._type = 'Archer'
+
+#     def attack(self):
+#         print(f'Attacking with arrows: arrows left - {self._num_arrows}')
+
+#     def run(self):
+#         print('Run really fast')
 
 
 # wizard1 = Wizard('Merlin', 50, 'wot@gmail.com')
@@ -212,3 +212,114 @@ class Archer(User):
 # print(issubclass(SuperList, list))
 # print(issubclass(list, object))
 # print(issubclass(SuperList, object))
+
+
+# Path: main.py
+# Multiple inheritance
+# class User:
+#     _type = None
+#     _loggedIn = False   # private variables because they start with _
+
+#     def sign_in(self):
+#         self._loggedIn = True
+#         print('Logged in')
+
+#     def attack(self):
+#         print('Do nothing')
+
+
+# class Wizard(User):  # Wizard class inherits from User class
+#     _name = 'Anonymous'
+#     _power = 0
+
+#     def __init__(self, name, power):
+#         # super().__init__(email)  # super() - calls the parent class
+#         self._name = name
+#         self._power = power
+#         User._type = 'Wizard'
+#         User.sign_in(self)
+
+#     def attack(self):
+#         User.attack(self)
+#         print(f'Attacking with power of {self._power}')
+
+#     def run(self):
+#         print('Run really fast')
+
+
+# class Archer(User):
+#     _name = 'Anonymous'
+#     _num_arrows = 0
+
+#     def __init__(self, name, num_arrows):
+#         self._name = name
+#         self._num_arrows = num_arrows
+#         User._type = 'Archer'
+
+#     def attack(self):
+#         print(f'Attacking with arrows: arrows left - {self._num_arrows}')
+
+#     def check_arrows(self):
+#         print(f'{self._num_arrows} remaining')
+
+#     def run(self):
+#         print('Run really fast')
+
+
+# class HybridBorg(Wizard, Archer):  # inherits from Wizard AND Archer
+#     def __init__(self, name, power, num_arrows):
+#         Archer.__init__(self, name, num_arrows)
+#         Wizard.__init__(self, name, power)
+
+
+# hb1 = HybridBorg('Borgie', 50, 100)
+# print(hb1.attack())  # which method will be called here?
+# # I still have no idea
+
+# print(hb1.check_arrows())
+# print(hb1.sign_in())
+# print(hb1.run())
+
+
+# Path: main.py
+# Method Resolution Order (MRO)
+# print(HybridBorg.__mro__)
+# (<class '__main__.HybridBorg'>, <class '__main__.Wizard'>, <class '__main__.Archer'>, <class '__main__.User'>, <class 'object'>)
+# the order in which Python will look for methods and attributes
+# in this case, it will look for the method in HybridBorg, then in Wizard, then in Archer, then in User, then in object
+# the order is determined by the order of the classes in the class definition
+# if we switch Wizard and Archer, the order will change
+
+#       A # A is the parent class
+#      / \
+#     /   \
+#    B     C  # B and C inherit from A
+#     \   /
+#      \ /
+#       D # D inherits from B and C
+
+
+# class A:
+#     num = 10
+
+
+# class B(A):
+#     pass
+
+
+# class C(A):
+#     num = 1
+
+
+# class D(C, B):
+#     pass
+
+
+# print(D.num)  # 1
+# print(D.__mro__)
+# (<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>)
+# the order is D, B, C, A, object
+# D inherits from B and C, B and C inherit from A, A inherits from object
+# the order is determined by the order of the classes in the class definition
+# if we switch B and C, the order will change
+# i.e if we have class D(C, B), the order will be D, C, B, A, object
