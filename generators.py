@@ -97,8 +97,8 @@ def fibLi(num):
     fib = [0, 1]
     if (num <= 0):
         raise ValueError('Non-negative numbers required')
-    for _ in range(num-1):
-        fib.append(fib[_]+fib[_+1])
+    for i in range(num-1):
+        fib.append(fib[i]+fib[i+1])
     return fib
 
 
