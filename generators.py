@@ -10,61 +10,61 @@ def performance(fn):
     return wrapper
 
 
-# @performance  # this is the decorator
-# def long_time():
-#     print('1')
-#     for i in range(100000000):
-#         i*5
+@performance  # this is the decorator
+def long_time():
+    print('1')
+    for i in range(100000000):
+        i*5
 
 
-# @performance
-# def long_time2():
-#     print('2')
-#     for i in list(range(100000000)):
-#         i*5
+@performance
+def long_time2():
+    print('2')
+    for i in list(range(100000000)):
+        i*5
 
 
 # # long_time()
 # # long_time2()
 
 
-# def gen_fun(num):   # this is a generator
-#     for i in range(num):
-#         yield i
+def gen_fun(num):   # this is a generator
+    for i in range(num):
+        yield i
 
 
 # # for item in gen_fun(1000):
 # #     print(item)
 
 
-# def special_for(iterable):
-#     iterator = iter(iterable)
-#     while True:
-#         try:
-#             print(iterator)
-#             print(next(iterator))
-#         except StopIteration:
-#             break
+def special_for(iterable):
+    iterator = iter(iterable)
+    while True:
+        try:
+            print(iterator)
+            print(next(iterator))
+        except StopIteration:
+            break
 
 
 # special_for([1, 2, 3])
 
-# class MyGen():
-#     current = 0
+class MyGen():
+    current = 0
 
-#     def __init__(self, first, last):
-#         self.first = first
-#         self.last = last
+    def __init__(self, first, last):
+        self.first = first
+        self.last = last
 
-#     def __iter__(self):
-#         return self
+    def __iter__(self):
+        return self
 
-#     def __next__(self):
-#         if MyGen.current < self.last:
-#             num = MyGen.current
-#             MyGen.current += 1
-#             return num
-#         raise StopIteration
+    def __next__(self):
+        if MyGen.current < self.last:
+            num = MyGen.current
+            MyGen.current += 1
+            return num
+        raise StopIteration
 
 
 # gen = MyGen(0, 100)
