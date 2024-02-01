@@ -3,6 +3,11 @@ Watermaker
 
 A small python script that watermarks any number of pdf files.
 
+Requirements
+------------
+
+``PyPDF2=3.0.1``
+
 How to use?
 -----------
 
