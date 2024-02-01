@@ -1,6 +1,5 @@
 import PyPDF2
 import sys
-import os
 
 # Get the path of the file to be processed
 inputs = sys.argv[1:]
