@@ -1,22 +1,41 @@
+import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 
 class BankAccount:
-    def __init__(self, balance=0):
-        self.balance = balance
+    def __init__(self):
+        self.balance = 0
+        self.lock = threading.RLock()
 
-    def withdraw(self, amount):
-        if self.balance >= amount:
-            new_balance = self.balance - amount
-            time.sleep(0.1)  # Simulate a delay
-            self.balance = new_balance
-        else:
-            raise ValueError("Insufficient balance")
+    def deposit(self, amount):
+        print(
+            f"Thread {threading.current_thread().name} "
+            "waiting to acquire lock for .deposit()"
+        )
+        with self.lock:
+            print(
+                f"Thread {threading.current_thread().name} "
+                "acquired lock for .deposit()"
+            )
+            time.sleep(0.1)
+            self._update_balance(amount)
 
-account = BankAccount(1000)
+    def _update_balance(self, amount):
+        print(
+            f"Thread {threading.current_thread().name} "
+            "waiting to acquire lock for ._update_balance()"
+        )
+        with self.lock:  # This will cause a deadlock
+            print(
+                f"Thread {threading.current_thread().name} "
+                "acquired lock for ._update_balance()"
+            )
+            self.balance += amount
 
-with ThreadPoolExecutor(max_workers=2) as executor:
-    executor.submit(account.withdraw, 500)
-    executor.submit(account.withdraw, 700)
+account = BankAccount()
 
-print(f"Final account balance: {account.balance}")
+with ThreadPoolExecutor(max_workers=3, thread_name_prefix="Worker") as executor:
+    for _ in range(3):
+        executor.submit(account.deposit, 100)
+
+print(f"Final balance: {account.balance}")
